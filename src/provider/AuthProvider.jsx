@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
                 } else {
                     alert('curent user not found')
                 }
-                window.location.href = '/';
             } else {
                 // Handle login error
                 const errorData = await response.json();
@@ -75,6 +74,8 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
+        // Clear user data from localStorage
+        localStorage.removeItem('user');
     };
 
     const info = { userLogin, user, logout }

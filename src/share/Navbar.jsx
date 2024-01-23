@@ -5,8 +5,8 @@ import { useAuth } from "../provider/AuthProvider";
 const Navbar = () => {
 
     const { user, logout } = useAuth()
-    // const { name, role } = user
-    console.log(user,)
+    const role = user && user.length > 0 ? user[0].role : null;
+    console.log(user, role);
 
     const [isMobileNavOpen, setMobileNavOpen] = useState(false);
     const toggleMobileNav = () => {
@@ -29,6 +29,16 @@ const Navbar = () => {
                 <div className="hidden lg:flex gap-4 text-lg">
                     <NavLink to={'/'} activeClassName="active">Home</NavLink>
                     {user ? <>
+                        {role === 'House Owner' && (
+                            <NavLink to={'/house-owner-route'} activeClassName="active">
+                                House Owner
+                            </NavLink>
+                        )}
+                        {role === 'House Renter' && (
+                            <NavLink to={'/house-renter-route'} activeClassName="active">
+                                House Renter
+                            </NavLink>
+                        )}
                         <button onClick={logout} className="hover:bg-[#3064bc] text-white px-2 py-1 text-md rounded-md bg-blue-700">
                             Logout
                         </button>

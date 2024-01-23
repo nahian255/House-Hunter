@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link, } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { Input } from "@mantine/core";
 import { useAuth } from "../../provider/AuthProvider";
 
 const Login = () => {
 
+    const navigate = useNavigate()
     const { userLogin } = useAuth()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,6 +46,7 @@ const Login = () => {
         if (email && password) {
             // all userLogin function in the provider component
             userLogin(email, password)
+            navigate('/')
         } else {
             // At least one field is not valid, display an error message or handle it accordingly
             console.log('Login failed. Please check the form for errors.');
