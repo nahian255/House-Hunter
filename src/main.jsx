@@ -6,11 +6,14 @@ import router from './router/Router'
 import '@mantine/core/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import { AuthProvider } from './provider/AuthProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MantineProvider>
-      <RouterProvider router={router} />
-    </MantineProvider>
+    <AuthProvider>
+      <MantineProvider>
+        <RouterProvider router={router} />
+      </MantineProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

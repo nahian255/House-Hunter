@@ -1,9 +1,12 @@
 import { Input, Select } from '@mantine/core';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; import Swal from 'sweetalert2';
 
 const Register = () => {
 
+    // const { user, setUser } = useAuth()
+    // console.log(user);
+    const navigate = useNavigate()
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [phoneNum, setPhoneNum] = useState('');
@@ -11,7 +14,6 @@ const Register = () => {
     const [password, setPassword] = useState('');
 
     const [nameError, setNameError] = useState('')
-    const [roleError, setRoleError] = useState('')
     const [phoneNumError, setPhoneNumError] = useState('')
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('');
@@ -23,8 +25,6 @@ const Register = () => {
             setNameError('');
         }
     };
-
-
     const validatePhoneNum = (newPhoneNum) => {
         if (newPhoneNum.trim() === '') {
             setPhoneNumError('PhoneNum is required');
@@ -32,8 +32,6 @@ const Register = () => {
             setPhoneNumError('');
         }
     };
-
-
     const validateEmail = (newEmail) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!newEmail.trim()) {
@@ -53,7 +51,7 @@ const Register = () => {
         if (!newPassword.trim()) {
             setPasswordError('Password is required');
             return false;
-        } else if (newPassword.length < 5) {
+        } else if (newPassword.length < 6) {
             setPasswordError('Password must be at least 6 characters long');
             return false;
         } else {
@@ -62,14 +60,61 @@ const Register = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(name, role, phoneNum, email, password);
+        validateName(name), validatePhoneNum(phoneNum), validateEmail(email), validatePassword(password)
+        if (name && phoneNum && email && password) {
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        role,
+                        phoneNum,
+                        email,
+                        password,
+                    }),
+                });
+
+                if (response.ok) {
+                    // Handle successful registration, e.g., show success message
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Register Successful",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    // Clear input fields
+                    setName('');
+                    setPhoneNum('');
+                    setEmail('');
+                    setPassword('');
+                    // Redirect or perform other actions
+                    // setUser(name, role, phoneNum, email, password)
+                    navigate('/login');
+
+                } else {
+                    // Handle registration error
+                    alert('email alradey used');
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+            }
+        } else {
+            // Handle case where not all input fields are filled
+            console.error('All input fields are required');
+        }
+
+
     }
 
     return (
-        <div className="max-h-screen bg-white p-6 lg:p-16 flex justify-center items-center">
-            <div className="min-h-3.5 md:w-[400px] lg:h-[550px] p-4 lg:px-6 rounded-3xl shadow-2xl bg-gray-200 mt-10 pt-8">
+        <div className="min-h-screen bg-white p-6 lg:p-16 flex justify-center items-center">
+            <div className="min-h-3.5 md:w-[400px] lg:h-[650px] p-4 lg:px-6 rounded-3xl shadow-2xl bg-[#c2b4b4] mt-10 pt-8">
                 <h1 className="text-4xl text-[#433939] text-center font-sans font-bold">Register </h1>
 
                 <form onSubmit={handleSubmit} className='w-full py-6'>

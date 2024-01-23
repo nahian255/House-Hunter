@@ -47,7 +47,7 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to={'/register'} activeClassName="active" onClick={toggleMobileNav}>
                         <button className="hover:bg-[#3064bc] text-white px-2 py-1 text-md rounded-md bg-blue-700">
-                            Login
+                            Register
                         </button>
                     </NavLink>
                 </div>
