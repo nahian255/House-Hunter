@@ -1,18 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import { Input } from "@mantine/core";
-import Swal from "sweetalert2";
+import { useAuth } from "../../provider/AuthProvider";
 
 const Login = () => {
 
-    const navigate = useNavigate()
+    const { userLogin } = useAuth()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const [emailError, setEmailError] = useState('')
     const [passwordError, setPasswordError] = useState('');
-
-    console.log(email, emailError);
 
     const validateEmail = (newEmail) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,41 +43,8 @@ const Login = () => {
 
         validateEmail(email), validatePassword(password)
         if (email && password) {
-            try {
-                const response = await fetch('http://localhost:3000/user-login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email,
-                        password,
-                    }),
-                });
-
-                if (response.ok) {
-                    // Handle successful login, e.g., show success message and redirect
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Login Successful",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    navigate('/');
-                } else {
-                    // Handle login error
-                    const errorData = await response.json();
-                    Swal.fire({
-                        icon: "error",
-                        title: "Login Failed",
-                        text: errorData.error || "email and password not match",
-                    });
-                }
-            } catch (error) {
-                console.error('Error during login:', error);
-            }
-
+            // all userLogin function in the provider component
+            userLogin(email, password)
         } else {
             // At least one field is not valid, display an error message or handle it accordingly
             console.log('Login failed. Please check the form for errors.');

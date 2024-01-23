@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import Swal from "sweetalert2";
+
 
 // Create a context to manage user data
 const AuthContext = createContext();
@@ -6,17 +8,76 @@ const AuthContext = createContext();
 // Create a provider to wrap your app with
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    console.log(user);
 
-    const userLogin = (userData) => {
-        // Assuming userData is an object containing user information
-        setUser(userData);
+    const userLogin = async (email, password) => {
+        console.log(email, password);
+        try {
+            const response = await fetch('http://localhost:3000/user-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+            if (response.ok) {
+                // Handle successful login, e.g., show success message and redirect
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Login Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                if (email) {
+                    fetch(`http://localhost:3000/current-userinfo?email=${email}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update state with the received booking data
+                            setUser(data);
+                            // Store user data in localStorage
+                            localStorage.setItem('user', JSON.stringify(data));
+
+                        })
+                        .catch(error => {
+                            console.error('Error retrieving booking data:', error);
+                        });
+                } else {
+                    alert('curent user not found')
+                }
+                window.location.href = '/';
+            } else {
+                // Handle login error
+                const errorData = await response.json();
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Failed",
+                    text: errorData.error || "email and password not match",
+                });
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-    // const logout = () => {
-    //     setUser(null);
-    // };
+    useEffect(() => {
+        // On component mount, check if user data exists in localStorage and set the state
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
 
-    const info = { userLogin }
+
+    const logout = () => {
+        setUser(null);
+    };
+
+    const info = { userLogin, user, logout }
     return (
         <AuthContext.Provider value={info}>
             {children}
