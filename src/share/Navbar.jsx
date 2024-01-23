@@ -29,10 +29,15 @@ const Navbar = () => {
                 <div className="hidden lg:flex gap-4 text-lg">
                     <NavLink to={'/'} activeClassName="active">Home</NavLink>
                     {user ? <>
-                        {role === 'House Owner' && (
-                            <NavLink to={'/house-owner-route'} activeClassName="active">
-                                House Owner
+                        {role === 'House Owner' && (<>
+                            <NavLink to={'/owner/my-house'} activeClassName="active">
+                                My House
                             </NavLink>
+                            <NavLink to={'/owner/add-house'} activeClassName="active">
+                                Add House
+                            </NavLink>
+                        </>
+
                         )}
                         {role === 'House Renter' && (
                             <NavLink to={'/house-renter-route'} activeClassName="active">
