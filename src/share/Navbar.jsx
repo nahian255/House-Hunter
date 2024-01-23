@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
+import './css/style.css'
 
 const Navbar = () => {
 
@@ -12,7 +13,6 @@ const Navbar = () => {
     const toggleMobileNav = () => {
         setMobileNavOpen(!isMobileNavOpen);
     };
-
 
     return (
         <div className=''>
@@ -36,13 +36,21 @@ const Navbar = () => {
                             <NavLink to={'/owner/add-house'} activeClassName="active">
                                 Add House
                             </NavLink>
+                            <p className="bg-gray-400 p-1 rounded-lg"> Role- House Owner</p>
+
                         </>
 
                         )}
                         {role === 'House Renter' && (
-                            <NavLink to={'/house-renter-route'} activeClassName="active">
-                                House Renter
-                            </NavLink>
+                            <>
+
+                                <NavLink to={'/renter/booking-house'} activeClassName="active">
+                                    Booking House
+                                </NavLink>
+                                <p className="bg-gray-400 p-1 rounded-lg"> Role- House Render</p>
+
+                            </>
+
                         )}
                         <button onClick={logout} className="hover:bg-[#3064bc] text-white px-2 py-1 text-md rounded-md bg-blue-700">
                             Logout

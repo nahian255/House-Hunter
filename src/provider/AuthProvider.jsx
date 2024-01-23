@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const userLogin = async (email, password) => {
         console.log(email, password);
         try {
-            const response = await fetch('http://localhost:3000/user-login', {
+            const response = await fetch('https://househunter-wj8g.onrender.com/user-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
                 });
 
                 if (email) {
-                    fetch(`http://localhost:3000/current-userinfo?email=${email}`)
+                    fetch(`https://househunter-wj8g.onrender.com/current-userinfo?email=${email}`)
                         .then(response => response.json())
                         .then(data => {
                             // Update state with the received booking data

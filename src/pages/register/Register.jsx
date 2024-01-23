@@ -65,7 +65,7 @@ const Register = () => {
         validateName(name), validatePhoneNum(phoneNum), validateEmail(email), validatePassword(password)
         if (name && phoneNum && email && password) {
             try {
-                const response = await fetch('http://localhost:3000/register', {
+                const response = await fetch('https://househunter-wj8g.onrender.com/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

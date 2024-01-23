@@ -37,7 +37,7 @@ const AddHouse = () => {
                 description
             };
             try {
-                const response = await fetch('http://localhost:3000/onwer/added-house', {
+                const response = await fetch('https://househunter-wj8g.onrender.com/onwer/added-house', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

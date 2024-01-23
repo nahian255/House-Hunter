@@ -11,7 +11,7 @@ const MyHouse = () => {
     useEffect(() => {
         // Assuming user.email is available in your component's state or props
         if (email) {
-            fetch(`http://localhost:3000/onwer/house?email=${email}`)
+            fetch(`https://househunter-wj8g.onrender.com/onwer/house?email=${email}`)
                 .then(response => response.json())
                 .then(data => {
                     // Update state with the received booking data
@@ -40,7 +40,7 @@ const MyHouse = () => {
 
                 </Table.Thead>
                 <Table.Tbody>
-                    {
+                    {/* {
                         data?.map((item) => (
                             // console.log(item)
                             <>
@@ -54,7 +54,7 @@ const MyHouse = () => {
                                 </Table.Tr>
                             </>
                         ))
-                    }
+                    } */}
 
                 </Table.Tbody>
             </Table>

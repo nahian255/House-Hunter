@@ -5,6 +5,7 @@ import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import AddHouse from "../pages/houseOwner/addHouse/AddHouse";
 import MyHouse from "../pages/houseOwner/myHouse/MyHouse";
+import BookingHouse from "../pages/houseRenter/bookingHouse/BookingHouse";
 
 
 const router = createBrowserRouter([
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
                 path: '/',
                 element: <Home />,
                 loader: async () => {
-                    return fetch(`http://localhost:3000/all-house`);
+                    return fetch(`https://househunter-wj8g.onrender.com/all-house`);
                 },
             },
             {
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
             {
                 path: '/owner/my-house',
                 element: <MyHouse />
-            }
+            },
+            {
+                path: '/renter/booking-house',
+                element: <BookingHouse />
+            },
         ]
     },
 ]);
