@@ -16,6 +16,15 @@ const Home = () => {
         return () => clearTimeout(delay);
     }, []);
 
+    // Change page title while loading
+    useEffect(() => {
+        if (isLoading) {
+            document.title = "Loading... | Hunting Finder";
+        } else {
+            document.title = "All Houses | Hunting Finder";
+        }
+    }, [isLoading]);
+
     return (
         <div className=' px-8 md:px-20 py-8'>
             <h1 className="text-4xl text-[#1f3e72] font-bold pb-4 text-center">All Houses</h1>

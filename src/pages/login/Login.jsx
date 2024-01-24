@@ -58,10 +58,11 @@ const Login = () => {
         <div className="max-h-screen bg-white p-6 lg:p-16 flex justify-center items-center">
             <div className="min-h-3.5 md:w-[400px] lg:h-[500px] p-4 lg:px-6 rounded-3xl shadow-2xl bg-[#c2b4b4] ">
                 <h1 className="text-4xl text-[#433939] text-center font-sans font-bold">LOGIN</h1>
-
+                <p> Login your register information.</p>
                 <form onSubmit={handleSubmit} className='w-full py-10'>
                     <div className="">
                         <label className='text-start text-xl text-[#1f3e72] font-sans py-'>Email</label>
+
                         <Input
                             size="md"
                             radius="md"
